@@ -65,7 +65,8 @@ class ViewableController: UIViewController {
     lazy var videoView: VideoView = {
         let view = VideoView()
         view.delegate = self
-
+        view.layer.zPosition = -1
+        
         return view
     }()
 
@@ -364,7 +365,8 @@ class ViewableController: UIViewController {
             self.pauseButton.alpha = 0
             self.playButton.alpha = 0
             self.videoProgressView.alpha = 0
-
+            self.videoView.layer.zPosition = 0
+        
             self.videoView.play()
             self.requestToHideOverlayIfNeeded()
         #else

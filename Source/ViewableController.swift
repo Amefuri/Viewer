@@ -300,8 +300,10 @@ class ViewableController: UIViewController {
             }
         case .video:
             #if os(iOS)
+                self.imageLoadingIndicator.alpha = 1
                 let shouldAutoplayVideo = self.dataSource?.viewableControllerShouldAutoplayVideo(self) ?? false
                 if !shouldAutoplayVideo {
+                    self.imageLoadingIndicator.alpha = 0
                     viewable.media { image, _ in
                         if let image = image {
                             self.imageView.image = image

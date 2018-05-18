@@ -338,7 +338,7 @@ extension ViewerController {
 
         let viewable = self.dataSource!.viewerController(self, viewableAt: indexPath)
         let image = viewable.placeholder
-        selectedCell.alpha = 0
+        selectedCell.alpha = 1
 
         let presentedView = self.presentedViewCopy()
         presentedView.frame = self.view.convert(selectedCell.frame, from: self.collectionView)

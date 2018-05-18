@@ -293,6 +293,8 @@ class ViewableController: UIViewController {
                     viewable.media { image, _ in
                         if let image = image {
                             self.imageView.image = image
+                            self.videoView.image = image
+                            self.videoView.layoutSubviews()
                         }
                     }
                 }

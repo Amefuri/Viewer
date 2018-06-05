@@ -480,7 +480,7 @@ extension ViewerController {
         guard !controller.hasZoomed else { return }
         
         let viewHeight = controller.imageView.frame.size.height
-        let viewHalfHeight = viewHeight / 2
+        let viewHalfHeight = UIScreen.main.bounds.height / 2
         var translatedPoint = gesture.translation(in: controller.imageView)
 
         if gesture.state == .began {

@@ -338,7 +338,7 @@ extension ViewerController {
 
         let viewable = self.dataSource!.viewerController(self, viewableAt: indexPath)
         let image = viewable.placeholder
-        selectedCell.alpha = 0
+        selectedCell.alpha = 1
 
         let presentedView = self.presentedViewCopy()
         presentedView.frame = self.view.convert(selectedCell.frame, from: self.collectionView)
@@ -347,9 +347,21 @@ extension ViewerController {
         self.view.addSubview(self.overlayView)
         self.view.addSubview(presentedView)
 
+        //To avoid displaying header/footer's contents overlap the safe area
+        var topSafeArea: CGFloat
+        var bottomSafeArea: CGFloat
+        
+        if #available(iOS 11.0, *) {
+            topSafeArea = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+            bottomSafeArea = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        } else {
+            topSafeArea = topLayoutGuide.length
+            bottomSafeArea = bottomLayoutGuide.length
+        }
+        
         if let headerView = self.headerView {
             let bounds = UIScreen.main.bounds
-            headerView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: ViewerController.HeaderHeight)
+            headerView.frame = CGRect(x: 0, y: topSafeArea, width: bounds.width, height: ViewerController.HeaderHeight)
             headerView.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin, .flexibleWidth]
             headerView.alpha = 0
             self.view.addSubview(headerView)
@@ -357,7 +369,7 @@ extension ViewerController {
 
         if let footerView = self.footerView {
             let bounds = UIScreen.main.bounds
-            footerView.frame = CGRect(x: 0, y: bounds.size.height - ViewerController.FooterHeight, width: bounds.width, height: ViewerController.FooterHeight)
+            footerView.frame = CGRect(x: 0, y: bounds.size.height - ViewerController.FooterHeight - bottomSafeArea , width: bounds.width, height: ViewerController.FooterHeight )
             footerView.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleWidth]
             footerView.alpha = 0
             self.view.addSubview(footerView)
@@ -480,7 +492,7 @@ extension ViewerController {
         guard !controller.hasZoomed else { return }
         
         let viewHeight = controller.imageView.frame.size.height
-        let viewHalfHeight = viewHeight / 2
+        let viewHalfHeight = UIScreen.main.bounds.height / 2
         var translatedPoint = gesture.translation(in: controller.imageView)
 
         if gesture.state == .began {

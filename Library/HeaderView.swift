@@ -8,7 +8,7 @@ protocol HeaderViewDelegate: class {
 class HeaderView: UIView {
     weak var viewDelegate: HeaderViewDelegate?
     static let ButtonSize = CGFloat(50.0)
-    static let TopMargin = CGFloat(15.0)
+    static let TopMargin = CGFloat(0)
 
     lazy var clearButton: UIButton = {
         let image = UIImage(named: "clear")!

@@ -347,9 +347,21 @@ extension ViewerController {
         self.view.addSubview(self.overlayView)
         self.view.addSubview(presentedView)
 
+        //To avoid displaying header/footer's contents overlap the safe area
+        var topSafeArea: CGFloat
+        var bottomSafeArea: CGFloat
+        
+        if #available(iOS 11.0, *) {
+            topSafeArea = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+            bottomSafeArea = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        } else {
+            topSafeArea = topLayoutGuide.length
+            bottomSafeArea = bottomLayoutGuide.length
+        }
+        
         if let headerView = self.headerView {
             let bounds = UIScreen.main.bounds
-            headerView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: ViewerController.HeaderHeight)
+            headerView.frame = CGRect(x: 0, y: topSafeArea, width: bounds.width, height: ViewerController.HeaderHeight)
             headerView.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin, .flexibleWidth]
             headerView.alpha = 0
             self.view.addSubview(headerView)
@@ -357,7 +369,7 @@ extension ViewerController {
 
         if let footerView = self.footerView {
             let bounds = UIScreen.main.bounds
-            footerView.frame = CGRect(x: 0, y: bounds.size.height - ViewerController.FooterHeight, width: bounds.width, height: ViewerController.FooterHeight)
+            footerView.frame = CGRect(x: 0, y: bounds.size.height - ViewerController.FooterHeight - bottomSafeArea , width: bounds.width, height: ViewerController.FooterHeight )
             footerView.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleWidth]
             footerView.alpha = 0
             self.view.addSubview(footerView)

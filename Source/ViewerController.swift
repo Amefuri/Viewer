@@ -270,7 +270,7 @@ extension ViewerController {
     #if os(iOS)
         public override var prefersStatusBarHidden: Bool {
             let orientation = UIApplication.shared.statusBarOrientation
-            if UIInterfaceOrientationIsLandscape(orientation) {
+            if orientation.isLandscape {
                 return true
             }
 
@@ -566,7 +566,7 @@ extension ViewerController {
 
     fileprivate func evaluateCellVisibility(collectionView: UICollectionView, currentIndexPath: IndexPath, upcomingIndexPath: IndexPath) {
         if !collectionView.indexPathsForVisibleItems.contains(upcomingIndexPath) {
-            var position: UICollectionViewScrollPosition?
+            var position: UICollectionView.ScrollPosition?
             if currentIndexPath.compareDirection(upcomingIndexPath) == .forward {
                 position = .bottom
             } else if currentIndexPath.compareDirection(upcomingIndexPath) == .backward {

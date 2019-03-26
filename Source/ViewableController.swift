@@ -54,7 +54,7 @@ class ViewableController: UIViewController {
     }()
 
     lazy var imageLoadingIndicator: UIActivityIndicatorView = {
-        let activityView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activityView = UIActivityIndicatorView(style: .whiteLarge)
         activityView.center = self.view.center
         activityView.startAnimating()
         activityView.alpha = 0
@@ -73,7 +73,7 @@ class ViewableController: UIViewController {
     lazy var playButton: UIButton = {
         let button = UIButton(type: .custom)
         let image = UIImage(named: "play")!
-        button.setImage(image, for: UIControlState())
+        button.setImage(image, for: UIControl.State())
         button.alpha = 0
         
         #if os(tvOS)
@@ -89,7 +89,7 @@ class ViewableController: UIViewController {
     lazy var repeatButton: UIButton = {
         let button = UIButton(type: .custom)
         let image = UIImage(named: "repeat")!
-        button.setImage(image, for: UIControlState())
+        button.setImage(image, for: UIControl.State())
         button.alpha = 0
         button.addTarget(self, action: #selector(ViewableController.repeatAction), for: .touchUpInside)
 
@@ -99,7 +99,7 @@ class ViewableController: UIViewController {
     lazy var pauseButton: UIButton = {
         let button = UIButton(type: .custom)
         let image = UIImage(named: "pause")!
-        button.setImage(image, for: UIControlState())
+        button.setImage(image, for: UIControl.State())
         button.alpha = 0
         button.addTarget(self, action: #selector(ViewableController.pauseAction), for: .touchUpInside)
 
